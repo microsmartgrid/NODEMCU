@@ -23,11 +23,12 @@ String getFromTerminal()
 
     if (item != "") // si parseo un string vacio
     {
-      item = item + ',';
+      if(i!=14) item = item + ',';
       trama = trama + item;
     }
     
   }
   Serial.flush();
+  trama = "Fase,Vrms[V],Irms[A],Ipk[A],Imax[A],Ih1[A],Ih2[A],Ih3[A],Ih4[A],Ih5[A],Ih6[A],Ih7[A],Ithd[%],Pa[kW],E[kWh]\n"+trama;
   return (trama);
 }
