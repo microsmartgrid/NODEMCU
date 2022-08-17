@@ -1,30 +1,34 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-
-#include "config.h"  // Sustituir con datos de vuestra red
+#include <StringSplitter.h>
+#include "parser.h"
+#include "config.h"
 #include "MQTT.hpp"
 #include "ESP8266_Utils.hpp"
 #include "ESP8266_Utils_MQTT.hpp"
 
-int a=0;
+String incomingDatos;
 
 void setup(void)
 {
-	Serial.begin(115200);
-	SPIFFS.begin();
-	ConnectWiFi_STA(true);
+  Serial.begin(115200);
+  SPIFFS.begin();
+  ConnectWiFi_STA(true);
   GetExternalIP();
-	InitMqtt();
+  InitMqtt();
 }
 
 void loop()
 {
-	HandleMqtt();
+  HandleMqtt();
+  if (Serial.available())
+  {
+    incomingDatos = getFromTerminal();
+    PublisMqtt(incomingDatos);
+  }
 
-	PublisMqtt(a++);
-
-	delay(1000);
 }
+
 
 void GetExternalIP()
 {

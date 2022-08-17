@@ -8,29 +8,27 @@ WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
 void SuscribeMqtt()
-{
-	mqttClient.subscribe("/edificio1");
-}
+  {
+	//mqttClient.subscribe("/edificio1");
+  }
 
 String payload;
-void PublisMqtt(unsigned long data)
+void PublisMqtt(String data)
 {
-	payload = "";
-	payload = String(data);
-	mqttClient.publish("topic", (char*)payload.c_str());
+  mqttClient.publish("/edificio1", (char*)data.c_str());
 }
 
 String content = "";
-void OnMqttReceived(char* topic, byte* payload, unsigned int length) 
+void OnMqttReceived(char* topic, byte* payload, unsigned int length)
 {
-	Serial.print("Received on ");
-	Serial.print(topic);
-	Serial.print(": ");
+  Serial.print("Received on ");
+  Serial.print(topic);
+  Serial.print(": ");
 
-	content = "";	
-	for (size_t i = 0; i < length; i++) {
-		content.concat((char)payload[i]);
-	}
-	Serial.print(content);
-	Serial.println();
+  content = "";
+  for (size_t i = 0; i < length; i++) {
+    content.concat((char)payload[i]);
+  }
+  Serial.print(content);
+  Serial.println();
 }
