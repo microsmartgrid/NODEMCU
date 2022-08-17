@@ -23,12 +23,12 @@ String getFromTerminal()
 
     if (item != "") // si parseo un string vacio
     {
-      if(i!=14) item = item + ',';
+      if(i!=14) item = item + ','; //al ultimo valor le borro la coma porque hace bardo despues en el server
       trama = trama + item;
     }
     
   }
   Serial.flush();
-  trama = "Fase,Vrms[V],Irms[A],Ipk[A],Imax[A],Ih1[A],Ih2[A],Ih3[A],Ih4[A],Ih5[A],Ih6[A],Ih7[A],Ithd[%],Pa[kW],E[kWh]\n"+trama;
+  trama = "Fase[°],Vrms[V],Irms[A],Ipk[A],Imax[A],Ih1[A],Ih2[A],Ih3[A],Ih4[A],Ih5[A],Ih6[A],Ih7[A],Ithd[%],Pa[kW],E[kWh]\n"+trama;
   return (trama);
 }
